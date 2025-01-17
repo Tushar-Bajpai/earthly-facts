@@ -9,7 +9,7 @@
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background-image: url('https://unsplash.com/photos/planet-earth-close-up-photography-yEauzeZU6xo'); /* Simple Earth image */
+            background-image: url('https://unsplash.com/photos/planet-earth-close-up-photography-yEauzeZU6xo'); /* Unsplash Earth image */
             background-size: cover;
             background-position: center;
             color: #333;
@@ -35,7 +35,7 @@
             max-width: 600px;
             margin: 50px auto;
             padding: 20px;
-            background-color: rgba(255, 255, 255, 0.5); /* More transparent background */
+            background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent background */
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             text-align: center;
             border-radius: 10px;
@@ -62,7 +62,7 @@
 
         .fact-title {
             font-weight: bold;
-            color: #007BFF;
+            color: #000; /* Black subheading font color */
         }
 
         button {
@@ -70,7 +70,7 @@
             padding: 10px 20px;
             font-size: 16px;
             color: #fff;
-            background-color: #000; /* Black button */
+            background-color: #000; /* Black button background */
             border: none;
             border-radius: 5px;
             cursor: pointer;
@@ -86,27 +86,49 @@
             transform: scale(0.95);
         }
 
-        /* Typewriter effect */
-        .typewriter {
-            display: inline-block;
-            overflow: hidden;
-            white-space: nowrap;
-            border-right: 3px solid;
-            animation: typing 3s steps(40, end), blink-caret 0.75s step-end infinite;
+        /* Floating animation for background elements */
+        .floating {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            animation: float 6s ease-in-out infinite;
+            z-index: 0;
         }
 
-        @keyframes typing {
-            from { width: 0; }
-            to { width: 100%; }
+        .floating:nth-child(1) {
+            top: 10%;
+            left: 20%;
+            animation-duration: 8s;
         }
 
-        @keyframes blink-caret {
-            from, to { border-color: transparent; }
-            50% { border-color: black; }
+        .floating:nth-child(2) {
+            top: 50%;
+            left: 70%;
+            animation-duration: 10s;
+        }
+
+        .floating:nth-child(3) {
+            top: 80%;
+            left: 30%;
+            animation-duration: 12s;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-20px);
+            }
         }
     </style>
 </head>
 <body>
+    <div class="floating"></div>
+    <div class="floating"></div>
+    <div class="floating"></div>
     <div id="app">
         <h1>Facts About Planet Earth</h1>
         <ul id="facts-list"></ul>
@@ -163,7 +185,7 @@
             factsList.innerHTML = ''; // Clear the current list
             const fact = facts[index];
             const listItem = document.createElement('li');
-            listItem.innerHTML = `<span class="fact-title">${fact.fact}:</span> <span class="typewriter">${fact.description}</span>`;
+            listItem.innerHTML = `<span class="fact-title">${fact.fact}:</span> ${fact.description}`;
             factsList.appendChild(listItem);
         }
 
