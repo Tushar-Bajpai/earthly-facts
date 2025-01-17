@@ -7,7 +7,7 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f0f8ff;
+            background-color: #000; /* Changed to black */
             display: flex;
             justify-content: center;
             align-items: center;
@@ -42,6 +42,15 @@
             margin-top: 20px;
             font-size: 18px;
             color: #333;
+            white-space: pre; /* Preserve spaces for typewriter effect */
+            overflow: hidden; /* Hide overflow for typewriter effect */
+            border-right: 2px solid black; /* Cursor effect */
+            animation: blink-caret 0.75s step-end infinite; /* Blinking cursor */
+        }
+
+        @keyframes blink-caret {
+            from, to { border-color: transparent; }
+            50% { border-color: black; }
         }
     </style>
 </head>
@@ -65,10 +74,24 @@
             "Earth rotates on its axis once every 24 hours."
         ];
 
+        function typeWriter(text, element, speed) {
+            let i = 0;
+            element.innerText = ''; // Clear previous text
+            function type() {
+                if (i < text.length) {
+                    element.innerText += text.charAt(i);
+                    i++;
+                    setTimeout(type, speed);
+                }
+            }
+            type();
+        }
+
         document.getElementById('generateFactBtn').addEventListener('click', function() {
             const randomIndex = Math.floor(Math.random() * facts.length);
             const randomFact = facts[randomIndex];
-            document.getElementById('factDisplay').innerText = randomFact;
+            const factDisplay = document.getElementById('factDisplay');
+            typeWriter(randomFact, factDisplay, 100); // Adjust speed as needed
         });
     </script>
 </body>
