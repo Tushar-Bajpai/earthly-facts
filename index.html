@@ -9,7 +9,7 @@
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background-image: url('https://unsplash.com/photos/planet-earth-close-up-photography-yEauzeZU6xo'); /* Unsplash Earth image */
+            background-image: url('https://unsplash.com/photos/planet-earth-close-up-photography-yEauzeZU6xo'); /* Simple Earth image */
             background-size: cover;
             background-position: center;
             color: #333;
@@ -42,7 +42,7 @@
         }
 
         h1 {
-            color: #007BFF;
+            color: #000; /* Black heading font color */
         }
 
         ul {
@@ -86,31 +86,29 @@
             transform: scale(0.95);
         }
 
-        /* Earth rotation animation */
-        .earth-image {
-            width: 100px;
-            height: 100px;
-            background-image: url('https://unsplash.com/photos/planet-earth-close-up-photography-yEauzeZU6xo'); /* Smaller Earth image */
-            background-size: cover;
-            border-radius: 50%;
-            margin: 0 auto 20px;
-            animation: none;
+        /* Typewriter effect */
+        .typewriter {
+            display: inline-block;
+            overflow: hidden;
+            white-space: nowrap;
+            border-right: 3px solid;
+            animation: typing 3s steps(40, end), blink-caret 0.75s step-end infinite;
         }
 
-        @keyframes rotate {
-            from {
-                transform: rotate(0deg);
-            }
-            to {
-                transform: rotate(360deg);
-            }
+        @keyframes typing {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+
+        @keyframes blink-caret {
+            from, to { border-color: transparent; }
+            50% { border-color: black; }
         }
     </style>
 </head>
 <body>
     <div id="app">
         <h1>Facts About Planet Earth</h1>
-        <div class="earth-image" id="earth-image"></div>
         <ul id="facts-list"></ul>
         <button id="change-fact-button">Change Fact</button>
     </div>
@@ -165,7 +163,7 @@
             factsList.innerHTML = ''; // Clear the current list
             const fact = facts[index];
             const listItem = document.createElement('li');
-            listItem.innerHTML = `<span class="fact-title">${fact.fact}:</span> ${fact.description}`;
+            listItem.innerHTML = `<span class="fact-title">${fact.fact}:</span> <span class="typewriter">${fact.description}</span>`;
             factsList.appendChild(listItem);
         }
 
@@ -173,17 +171,9 @@
             displayFact(currentFactIndex);
 
             const changeFactButton = document.getElementById('change-fact-button');
-            const earthImage = document.getElementById('earth-image');
-
             changeFactButton.addEventListener('click', () => {
                 currentFactIndex = (currentFactIndex + 1) % facts.length;
                 displayFact(currentFactIndex);
-
-                // Trigger Earth rotation animation
-                earthImage.style.animation = 'rotate 1s linear';
-                setTimeout(() => {
-                    earthImage.style.animation = 'none';
-                }, 1000);
             });
         });
     </script>
