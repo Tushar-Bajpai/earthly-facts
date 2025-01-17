@@ -9,7 +9,7 @@
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background-image: url('https://media.istockphoto.com/id/172923218/photo/view-of-earth-from-outer-space-with-north-america-visible.webp?s=2048x2048&w=is&k=20&c=tHGFSPMiN2YoukhLSp5VPi-vGI5wg7uvrSajfPIL4_g='); /* Unsplash Earth image */
+            background-image: url('https://unsplash.com/photos/planet-earth-close-up-photography-yEauzeZU6xo'); /* Unsplash Earth image */
             background-size: cover;
             background-position: center;
             color: #333;
@@ -35,7 +35,7 @@
             max-width: 600px;
             margin: 50px auto;
             padding: 20px;
-            background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent background */
+            background-color: rgba(255, 255, 255, 0.5); /* More transparent background */
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             text-align: center;
             border-radius: 10px;
@@ -70,7 +70,7 @@
             padding: 10px 20px;
             font-size: 16px;
             color: #fff;
-            background-color: #007BFF;
+            background-color: #000; /* Black button */
             border: none;
             border-radius: 5px;
             cursor: pointer;
@@ -78,7 +78,7 @@
         }
 
         button:hover {
-            background-color: #0056b3;
+            background-color: #333;
             transform: scale(1.05);
         }
 
@@ -86,51 +86,31 @@
             transform: scale(0.95);
         }
 
-        /* Floating animation for background elements */
-        .floating {
-            position: absolute;
+        /* Earth rotation animation */
+        .earth-image {
             width: 100px;
             height: 100px;
-            background-color: rgba(255, 255, 255, 0.2);
+            background-image: url('https://unsplash.com/photos/planet-earth-close-up-photography-yEauzeZU6xo'); /* Smaller Earth image */
+            background-size: cover;
             border-radius: 50%;
-            animation: float 6s ease-in-out infinite;
-            z-index: 0;
+            margin: 0 auto 20px;
+            animation: none;
         }
 
-        .floating:nth-child(1) {
-            top: 10%;
-            left: 20%;
-            animation-duration: 8s;
-        }
-
-        .floating:nth-child(2) {
-            top: 50%;
-            left: 70%;
-            animation-duration: 10s;
-        }
-
-        .floating:nth-child(3) {
-            top: 80%;
-            left: 30%;
-            animation-duration: 12s;
-        }
-
-        @keyframes float {
-            0%, 100% {
-                transform: translateY(0);
+        @keyframes rotate {
+            from {
+                transform: rotate(0deg);
             }
-            50% {
-                transform: translateY(-20px);
+            to {
+                transform: rotate(360deg);
             }
         }
     </style>
 </head>
 <body>
-    <div class="floating"></div>
-    <div class="floating"></div>
-    <div class="floating"></div>
     <div id="app">
         <h1>Facts About Planet Earth</h1>
+        <div class="earth-image" id="earth-image"></div>
         <ul id="facts-list"></ul>
         <button id="change-fact-button">Change Fact</button>
     </div>
@@ -193,9 +173,17 @@
             displayFact(currentFactIndex);
 
             const changeFactButton = document.getElementById('change-fact-button');
+            const earthImage = document.getElementById('earth-image');
+
             changeFactButton.addEventListener('click', () => {
                 currentFactIndex = (currentFactIndex + 1) % facts.length;
                 displayFact(currentFactIndex);
+
+                // Trigger Earth rotation animation
+                earthImage.style.animation = 'rotate 1s linear';
+                setTimeout(() => {
+                    earthImage.style.animation = 'none';
+                }, 1000);
             });
         });
     </script>
