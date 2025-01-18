@@ -16,10 +16,6 @@
         }
 
         .container {
-            perspective: 1000px;
-        }
-
-        .card {
             text-align: center;
             background: rgba(255, 255, 255, 0.2);
             backdrop-filter: blur(10px);
@@ -27,13 +23,11 @@
             border-radius: 8px;
             box-shadow: 0 0 30px rgba(0, 0, 0, 0.2);
             border: 1px solid rgba(255, 255, 255, 0.3);
-            transition: transform 0.6s;
-            transform-style: preserve-3d;
-            position: relative;
+            transition: transform 1s ease-in-out; /* Smooth transition for rotation */
         }
 
-        .card.flipped {
-            transform: rotateY(180deg);
+        .container.rotate {
+            transform: rotateY(360deg); /* Rotate 360 degrees */
         }
 
         h1 {
@@ -56,27 +50,15 @@
             margin-top: 20px;
             font-size: 18px;
             color: #fff;
-            white-space: pre;
-            overflow: hidden;
-            border-right: 2px solid white;
-            animation: blink-caret 0.75s step-end infinite;
-            backface-visibility: hidden;
             font-family: 'Courier New', Courier, monospace;
-        }
-
-        @keyframes blink-caret {
-            from, to { border-color: transparent; }
-            50% { border-color: white; }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="card" id="factCard">
-            <h1>Earth Facts Generator</h1>
-            <div id="generateFactBtn" class="earth-button">🌍</div>
-            <div id="factDisplay" class="fact-display"></div>
-        </div>
+    <div class="container" id="factCard">
+        <h1>Earth Facts Generator</h1>
+        <div id="generateFactBtn" class="earth-button">🌍</div>
+        <div id="factDisplay" class="fact-display"></div>
     </div>
     <script>
         const facts = [
@@ -92,32 +74,18 @@
             "Earth rotates on its axis once every 24 hours."
         ];
 
-        function typeWriter(text, element, speed) {
-            let i = 0;
-            element.innerText = '';
-            function type() {
-                if (i < text.length) {
-                    element.innerText += text.charAt(i);
-                    i++;
-                    setTimeout(type, speed);
-                }
-            }
-            type();
-        }
-
         document.getElementById('generateFactBtn').addEventListener('click', function() {
             const randomIndex = Math.floor(Math.random() * facts.length);
             const randomFact = facts[randomIndex];
             const factDisplay = document.getElementById('factDisplay');
             const factCard = document.getElementById('factCard');
             
-            // Set the new fact before flipping
-            typeWriter(randomFact, factDisplay, 100);
+            // Update fact text
+            factDisplay.innerText = randomFact;
             
-            // Toggle flip class
-            factCard.classList.toggle('flipped');
+            // Trigger rotation
+            factCard.classList.toggle('rotate');
         });
     </script>
 </body>
 </html>
-
