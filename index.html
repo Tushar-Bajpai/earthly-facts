@@ -7,14 +7,14 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            background: url('https://unsplash.com/photos/blue-skies-filled-of-stars-W8KTS-mhFUE') no-repeat center center fixed; /* Replace with a URL to a universe image */
-            background-size: cover;
+            background-color: #000;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
             margin: 0;
             overflow: hidden;
+            position: relative;
         }
 
         .container {
@@ -25,6 +25,7 @@
             border-radius: 8px;
             box-shadow: 0 0 30px rgba(0, 0, 0, 0.2);
             border: 1px solid rgba(255, 255, 255, 0.3);
+            z-index: 1;
         }
 
         h1 {
@@ -54,6 +55,7 @@
             position: absolute;
             font-size: 30px;
             animation: float 5s infinite ease-in-out;
+            z-index: 0;
         }
 
         .emoji:nth-child(1) { top: 10%; left: 20%; animation-delay: 0s; }
@@ -97,8 +99,7 @@
         document.getElementById('generateFactBtn').addEventListener('click', function() {
             const randomIndex = Math.floor(Math.random() * facts.length);
             const randomFact = facts[randomIndex];
-            const factDisplay = document.getElementById('factDisplay');
-            factDisplay.innerText = randomFact;
+            document.getElementById('factDisplay').innerText = randomFact;
         });
     </script>
 </body>
