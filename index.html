@@ -13,8 +13,7 @@
             align-items: center;
             height: 100vh;
             margin: 0;
-            overflow: hidden;
-            position: relative;
+            overflow: hidden; /* Prevent scrollbars during animation */
         }
 
         .container {
@@ -25,7 +24,7 @@
             border-radius: 8px;
             box-shadow: 0 0 30px rgba(0, 0, 0, 0.2);
             border: 1px solid rgba(255, 255, 255, 0.3);
-            z-index: 1;
+            position: relative; /* Position relative for absolute children */
         }
 
         h1 {
@@ -53,34 +52,36 @@
 
         .emoji {
             position: absolute;
-            font-size: 30px;
-            animation: float 5s infinite ease-in-out;
-            z-index: 0;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 50px;
+            opacity: 0;
+            animation: jump 1s ease forwards;
         }
 
-        .emoji:nth-child(1) { top: 10%; left: 20%; animation-delay: 0s; }
-        .emoji:nth-child(2) { top: 30%; left: 70%; animation-delay: 1s; }
-        .emoji:nth-child(3) { top: 50%; left: 40%; animation-delay: 2s; }
-        .emoji:nth-child(4) { top: 70%; left: 80%; animation-delay: 3s; }
-        .emoji:nth-child(5) { top: 90%; left: 10%; animation-delay: 4s; }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-20px); }
+        @keyframes jump {
+            0% {
+                bottom: 0;
+                opacity: 0;
+            }
+            50% {
+                bottom: 150px;
+                opacity: 1;
+            }
+            100% {
+                bottom: 0;
+                opacity: 0;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="emoji">🌟</div>
-    <div class="emoji">✨</div>
-    <div class="emoji">🌙</div>
-    <div class="emoji">☄️</div>
-    <div class="emoji">🌌</div>
-
     <div class="container">
         <h1>Earth Facts Generator</h1>
         <div id="generateFactBtn" class="earth-button">🌍</div>
         <div id="factDisplay" class="fact-display"></div>
+        <div id="emoji" class="emoji">🚀</div> <!-- Emoji to jump -->
     </div>
     <script>
         const facts = [
@@ -99,7 +100,14 @@
         document.getElementById('generateFactBtn').addEventListener('click', function() {
             const randomIndex = Math.floor(Math.random() * facts.length);
             const randomFact = facts[randomIndex];
-            document.getElementById('factDisplay').innerText = randomFact;
+            const factDisplay = document.getElementById('factDisplay');
+            factDisplay.innerText = randomFact;
+
+            // Trigger emoji jump animation
+            const emoji = document.getElementById('emoji');
+            emoji.style.animation = 'none'; // Reset animation
+            emoji.offsetHeight; // Trigger reflow
+            emoji.style.animation = ''; // Restart animation
         });
     </script>
 </body>
