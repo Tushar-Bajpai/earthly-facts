@@ -13,6 +13,7 @@
             align-items: center;
             height: 100vh;
             margin: 0;
+            overflow: hidden; /* Prevent scrollbars during animation */
         }
 
         .container {
@@ -23,11 +24,7 @@
             border-radius: 8px;
             box-shadow: 0 0 30px rgba(0, 0, 0, 0.2);
             border: 1px solid rgba(255, 255, 255, 0.3);
-            transition: transform 0.3s ease; /* Added for smooth transition */
-        }
-
-        .container.shrink {
-            transform: scale(0.95); /* Shrinking effect */
+            position: relative; /* Position relative for absolute children */
         }
 
         h1 {
@@ -52,13 +49,39 @@
             color: #fff;
             font-family: 'Courier New', Courier, monospace;
         }
+
+        .emoji {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 50px;
+            opacity: 0;
+            animation: jump 1s ease forwards;
+        }
+
+        @keyframes jump {
+            0% {
+                bottom: 0;
+                opacity: 0;
+            }
+            50% {
+                bottom: 150px;
+                opacity: 1;
+            }
+            100% {
+                bottom: 0;
+                opacity: 0;
+            }
+        }
     </style>
 </head>
 <body>
-    <div class="container" id="factCard">
+    <div class="container">
         <h1>Earth Facts Generator</h1>
         <div id="generateFactBtn" class="earth-button">🌍</div>
         <div id="factDisplay" class="fact-display"></div>
+        <div id="emoji" class="emoji">🚀</div> <!-- Emoji to jump -->
     </div>
     <script>
         const facts = [
@@ -74,21 +97,18 @@
             "Earth rotates on its axis once every 24 hours."
         ];
 
-        const factDisplay = document.getElementById('factDisplay');
-        const factCard = document.getElementById('factCard');
-
         document.getElementById('generateFactBtn').addEventListener('click', function() {
-            factCard.classList.add('shrink'); // Add shrink class
+            const randomIndex = Math.floor(Math.random() * facts.length);
+            const randomFact = facts[randomIndex];
+            const factDisplay = document.getElementById('factDisplay');
+            factDisplay.innerText = randomFact;
 
-            // Use setTimeout to delay the new fact display
-            setTimeout(() => {
-                const randomIndex = Math.floor(Math.random() * facts.length);
-                const randomFact = facts[randomIndex];
-                factDisplay.innerText = randomFact;
-                factCard.classList.remove('shrink'); // Remove shrink class
-            }, 300); // Adjust delay as needed (matches transition duration)
+            // Trigger emoji jump animation
+            const emoji = document.getElementById('emoji');
+            emoji.style.animation = 'none'; // Reset animation
+            emoji.offsetHeight; // Trigger reflow
+            emoji.style.animation = ''; // Restart animation
         });
     </script>
 </body>
 </html>
-
