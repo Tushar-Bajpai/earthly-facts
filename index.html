@@ -23,11 +23,6 @@
             border-radius: 8px;
             box-shadow: 0 0 30px rgba(0, 0, 0, 0.2);
             border: 1px solid rgba(255, 255, 255, 0.3);
-            transition: transform 1s ease-in-out; /* Smooth transition for rotation */
-        }
-
-        .container.rotate {
-            transform: rotateY(360deg); /* Rotate 360 degrees */
         }
 
         h1 {
@@ -55,7 +50,7 @@
     </style>
 </head>
 <body>
-    <div class="container" id="factCard">
+    <div class="container">
         <h1>Earth Facts Generator</h1>
         <div id="generateFactBtn" class="earth-button">🌍</div>
         <div id="factDisplay" class="fact-display"></div>
@@ -78,13 +73,7 @@
             const randomIndex = Math.floor(Math.random() * facts.length);
             const randomFact = facts[randomIndex];
             const factDisplay = document.getElementById('factDisplay');
-            const factCard = document.getElementById('factCard');
-            
-            // Update fact text
             factDisplay.innerText = randomFact;
-            
-            // Trigger rotation
-            factCard.classList.toggle('rotate');
         });
     </script>
 </body>
