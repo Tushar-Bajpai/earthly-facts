@@ -38,7 +38,7 @@
 
         h1 {
             color: black;
-            font-family: 'Courier New', Courier, monospace; /* Typewriter font style */
+            font-family: 'Courier New', Courier, monospace;
         }
 
         .earth-button {
@@ -61,7 +61,7 @@
             border-right: 2px solid white;
             animation: blink-caret 0.75s step-end infinite;
             backface-visibility: hidden;
-            font-family: 'Courier New', Courier, monospace; /* Typewriter font style */
+            font-family: 'Courier New', Courier, monospace;
         }
 
         @keyframes blink-caret {
@@ -111,12 +111,13 @@
             const factDisplay = document.getElementById('factDisplay');
             const factCard = document.getElementById('factCard');
             
-            factCard.classList.toggle('flipped');
+            // Set the new fact before flipping
+            typeWriter(randomFact, factDisplay, 100);
             
-            setTimeout(() => {
-                typeWriter(randomFact, factDisplay, 100);
-            }, 300);
+            // Toggle flip class
+            factCard.classList.toggle('flipped');
         });
     </script>
 </body>
 </html>
+
